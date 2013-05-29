@@ -1,0 +1,55 @@
+{% extends "base_.html" %}
+{% macro nav_li(endpoint, name) %}
+	{%- if url_for(endpoint) == request.script_root + request.path -%}
+		<li class="active"><a href="{{ url_for(endpoint) }}">{{ name|safe }}</a></li>
+	{%- else -%}
+		<li><a href="{{ url_for(endpoint) }}">{{ name|safe }}</a></li>
+	{%- endif -%}
+{% endmacro %}
+{% block base %}
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="page-header clearfix">
+				<h1 class="pull-left">
+					Houston
+					{#<small>
+						{% if current_user.is_anonymous() %}
+							<a href="{{ url_for('login') }}">Log in</a>
+						{% else %}
+							<!--<a href="{{ url_for('logout') }}">Log out {{ current_user.username }}</a>-->
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+									{{ current_user.username }}
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="{{ url_for('logout') }}">Log out</a></li>
+								</ul>
+							</div>
+						{% endif %}
+					</small>#}
+				</h1>
+				<form class="form-search pull-right" id="search-form">
+					<input type="text" class="input-medium search-query" placeholder="Search" />
+				</form>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div id="sidebar" class="span3" role="navigation">
+				{% include "sidebar.html" %}
+			</div>
+			<div id="content" class="span9" role="main">
+				{% for message in get_flashed_messages() %}
+					<p class="alert">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						{{ message|safe }}
+					</p>
+				{% endfor %}
+				{% block content %}
+				Oops, looks like someone forgot to override this block...<br />
+				If you're not me, please <a href="http://twitter.com/uppfinnarn" target="_blank">tell me</a>!
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,116 @@
+/* -- General -- */
+.table a:first-child:last-child {
+	display:block;
+	/* Abuse the margins, abuse them! */
+	margin:-8px;
+	padding:8px;
+}
+
+/* -- Utility Classes -- */
+.center { text-align:center !important; }
+
+.box {
+	border:1px solid #ccc;
+	border-radius:10px;
+	padding:10px;
+	margin-bottom:10px;
+}
+.box header {
+	background-color:#eee;
+	border-bottom:1px solid #ccc;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	font-weight:bold;
+	margin:-10px -10px 10px;
+	padding:5px 10px 5px;
+}
+.box header > a {
+	margin:-5px -10px -5px;
+	padding:5px 10px 5px;
+	display:block;
+}
+.box header > small, .box header > a > small {
+	font-weight:normal;
+}
+.box > ul.nav:last-child {
+	margin-bottom:0;
+}
+
+
+/* -- Login -- */
+.login-body {
+	background-color:#efefef;
+}
+.login-body .container {
+	padding-top:40px;
+}
+
+.login-form {
+	max-width:300px;
+	margin:0 auto 20px;
+	padding:19px 29px 29px;
+	border:1px solid #e5e5e5;
+	background-color:#fff;
+	border-radius:5px;
+	box-shadow:0 1px 2px rgba(0,0,0,.05)
+}
+.login-form header a {
+	margin-top:30px;
+}
+
+
+
+/* -- Layout -- */
+.container {
+	max-width:900px;
+}
+
+#search-form {
+	position:relative;
+	bottom:-20px;
+}
+
+.page-header small {
+	font-size:15px;
+}
+.page-header .dropdown {
+	display:inline-block;
+}
+
+
+
+/* -- Issue List -- */
+.issue-list-header .btn {
+	margin-top:10px;
+}
+
+.issue-list th.prio {
+	width:10px;
+}
+
+.issue-urgency-5 {
+	font-weight:500;
+	background-color:rgba(242, 222, 222, 0.75);
+}
+.issue-urgency-5, .issue-urgency-5 a {
+	color:#b94a48;
+}
+.issue-urgency-4 {
+	background-color:rgba(242, 222, 222, 0.25);
+}
+.issue-urgency-3 {
+	
+}
+.issue-urgency-2 {
+	font-weight:300;
+	background-color:rgba(240, 240, 240, 0.5);
+}
+.issue-urgency-1 {
+	font-weight:200;
+	background-color:rgba(240, 240, 240, 0.75);
+}
+.issue-urgency-0 {
+	font-weight:200;
+	background-color:rgb(240, 240, 240);
+	font-size:12px;
+}

@@ -1,0 +1,16 @@
+<h2>{{ issue.title }}</h2>
+<table class="table">
+	<tr>
+		<th>Project:</th>
+		<td><a href="{{ url_for('project', slug=issue.project.slug) }}">{{ issue.project.name }}</a></td>
+		<th>Urgency:</th>
+		<td>{{ issue.urgency }}</td>
+	</tr>
+	<tr>
+		<th>Spotted by:</th>
+		<td><a href="{{ url_for('user', username=issue.spotter.username) }}">{{ issue.spotter.username }}</a></td>
+		<th>At:</th>
+		<td>{{ issue.spotted.strftime('%H:%M<br />%d %b %Y')|safe }}</td>
+	</tr>
+</table>
+{{ issue.text|markdown }}

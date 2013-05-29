@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}{{ issue.title }} - {{ issue.project.name }}{% endblock %}
+{% block content %}
+	{% include "issue_modal.html" %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }}'s Issue Reports{% endblock %}
+{% block content %}
+	<h3>{{ user.username }}'s Issue Reports</h3>
+	
+	<table class="table issue-list">
+		<thead>
+			<tr>
+				<th class="prio">#</th>
+				<th>Title</th>
+				<th>Project</th>
+				<th>Spotted</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for issue in user.reports.order_by('spotted')|reverse %}
+			<tr class="issue-urgency-{{ issue.urgency }}">
+				<td>{{ issue.urgency }}</td>
+				<td><a href="{{ url_for('project_issue', slug=issue.project.slug, iid=issue.id )}}">{{ issue.title }}</a></td>
+				<td><a href="{{ url_for('project', slug=issue.project.slug) }}">{{ issue.project.name }}</a></td>
+				<td>{{ issue.spotted|relative_timestamp }} ago</td>
+			</tr>
+			{% else %}
+			<tr class="disabled">
+				<td>&nbsp;</td>
+				<td class="muted" colspan="9001">No Issues Reported</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

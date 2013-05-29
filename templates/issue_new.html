@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}New Issue - {{ project.name }}{% endblock %}
+{% block content %}
+	<form action="." method="POST" class="form-horizontal clearfix">
+		<header>
+			<h3>
+				New Issue
+				<small><a href="{{ url_for('project', slug=project.slug) }}" class="muted">{{ project.name }}</a></small>
+			</h3>
+		</header>
+		
+		{% if login_error %}
+			<p class="text-error">Invalid username or password</p>
+		{% endif %}
+		{% for field in form %}
+			{% if field.type == 'CSRFTokenField' or field.type == 'HiddenField' %}
+				{{ field }}
+			{% elif field.type == 'BooleanField' %}
+				<label class="checkbox">
+					{{ field }} {{ field.label.text}}
+				</label>
+			{% else %}
+				<div class="control-group{% if field.errors %} error{% endif %}">
+					<label class="control-label" for="{{ field.id }}">{{ field.label.text}}</label>
+					<div class="controls">
+						{% if field.type == "TextAreaField" %}
+						{{ field(rows=20, class='input-block-level') }}
+						{% else %}
+						{{ field(placeholder=field.label.text, class='input-block-level') }}
+						{% endif %}
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+		
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary" name="submit" value="Submit" />
+		</div>
+	</form>
+{% endblock %}

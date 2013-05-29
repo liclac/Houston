@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }}'s Projects{% endblock %}
+{% block content %}
+	<h3>{{ user.username }}'s Projects</h3>
+	
+	<table class="table">
+		{% for project in user.projects %}
+		<tr>
+			<td><a href="{{ url_for('project', slug=project.slug) }}">{{ project.name }}</a></td>
+			<td>{{ project.description }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

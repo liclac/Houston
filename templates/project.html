@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ project.name }}{% endblock %}
+{% block content %}
+	<header class="issue-list-header clearfix">
+		<h3 class="pull-left">
+			{{ project.name }}&nbsp;
+			<small>by <a href="{{ url_for('user', username=project.owner.username) }}">{{ project.owner.username }}</small>
+		</h3>
+		<a href="{{ url_for('project_issue_new', slug=project.slug) }}" class="btn pull-right">New Issue</a>
+	</header>
+	<table class="table issue-list">
+		<thead>
+			<tr>
+				<th class="prio">#</th>
+				<th>Title</th>
+				<th>Spotter</th>
+				<th>Spotted</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for issue in project.issues.order_by('-urgency') %}
+			<tr class="issue-urgency-{{ issue.urgency }}">
+				<td>{{ issue.urgency }}</td>
+				<td><a href="{{ url_for('project_issue', slug=issue.project.slug, iid=issue.id )}}">{{ issue.title }}</a></td>
+				<td><a href="{{ url_for('user', username=issue.spotter.username) }}">{{ issue.spotter.username }}</a></td>
+				<td>{{ issue.spotted|relative_timestamp }} ago</td>
+			</tr>
+			{% else %}
+			<tr class="disabled">
+				<td>&nbsp;</td>
+				<td class="muted" colspan="9001">No Issues</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

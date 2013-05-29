@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }}'s Profile{% endblock %}
+{% block content %}
+	<h3>{{ user.username }}'s Profile</h3>
+	
+	<div class="box span5">
+		<header>
+			<a href="{{ url_for('user_projects', username=user.username) }}">
+				Projects <small class="muted pull-right">({{ user.projects.count() }})</small>
+			</a>
+		</header>
+		<ul class="nav nav-pills nav-stacked">
+			{% for project in user.projects %}
+			<li><a href="{{ url_for('project', slug=project.slug) }}">{{ project.name }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	
+	<div class="box span5">
+		<header>
+			<a href="{{ url_for('user_reports', username=user.username) }}">
+				Issue Reports <small class="muted pull-right">({{ user.reports.count() }})</small>
+			</a>
+		</header>
+		<ul class="nav nav-pills nav-stacked">
+			{% for issue in user.reports %}
+			<li><a href="{{ url_for('project_issue', slug=issue.project.slug, iid=issue.id) }}">{{ issue.title }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
