@@ -114,3 +114,19 @@
 	background-color:rgb(240, 240, 240);
 	font-size:12px;
 }
+
+/* -- Single Issue -- */
+.urgency-5, .urgency-4 {
+	color:#b94a48;
+}
+.urgency-3 {
+	color:#666;
+}
+.urgency-2, .urgency-1 {
+	color:#999;
+}
+.urgency-0 {
+	color:#bbb;
+}
+
+.urgency-5 { font-weight:900; }

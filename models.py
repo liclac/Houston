@@ -54,12 +54,12 @@ class Issue(db.Model):
 	text = db.Column(db.Text())
 	
 	urgencies = [
-		"0 - Wishlist",
-		"1 - No hurry at all",
-		"2 - Not too important",
-		"3 - Normal",
-		"4 - Pretty important",
-		"5 - ON FIRE!"
+		"Wishlist",
+		"No hurry at all",
+		"Not too important",
+		"Normal importance",
+		"Pretty important",
+		"ON FIRE!"
 	]
 	
 	def __init__(self, project, spotter, urgency, title, text):

@@ -1,16 +1,14 @@
+<ul class="breadcrumb">
+	<li><a href="{{ url_for('project', slug=issue.project.slug) }}">{{ issue.project.name }}</a> <span class="divider">/</span></li>
+	<li>Issue</li>
+</ul>
 <h2>{{ issue.title }}</h2>
-<table class="table">
-	<tr>
-		<th>Project:</th>
-		<td><a href="{{ url_for('project', slug=issue.project.slug) }}">{{ issue.project.name }}</a></td>
-		<th>Urgency:</th>
-		<td>{{ issue.urgency }}</td>
-	</tr>
-	<tr>
-		<th>Spotted by:</th>
-		<td><a href="{{ url_for('user', username=issue.spotter.username) }}">{{ issue.spotter.username }}</a></td>
-		<th>At:</th>
-		<td>{{ issue.spotted.strftime('%H:%M<br />%d %b %Y')|safe }}</td>
-	</tr>
-</table>
+<p class="muted">
+	Spotted by <a href="{{ url_for('user', username=issue.spotter.username) }}">{{ issue.spotter.username }}</a>,
+	<abbr title="At {{ issue.spotted.strftime('%H:%M, %d %b %Y') }}">{{ issue.spotted|relative_timestamp }} ago</abbr>
+</p>
+<p class="muted urgency-{{ issue.urgency }}">
+	{{ issue.urgencies[issue.urgency] }}
+</p>
+<hr />
 {{ issue.text|markdown }}

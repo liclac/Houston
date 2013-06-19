@@ -2,8 +2,6 @@ import os, re
 from datetime import datetime
 from flask import Flask, g, request
 from flask import render_template, url_for, redirect, abort, flash
-from flask.ext.security import Security
-from flask.ext.security import SQLAlchemyUserDatastore
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_user, logout_user, current_user
 from flask.ext.wtf import Form

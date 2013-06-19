@@ -10,12 +10,5 @@ class LoginForm(Form):
 class IssueForm(Form):
 	title = TextField(u'Title', validators=[validators.required(), validators.length(max=140)])
 	urgency = SelectField(u'Urgency', coerce=int,
-							choices=[(i, text) for i, text in enumerate(Issue.urgencies)], default=3)
-	text = TextAreaField(u'Text', validators=[validators.DataRequired()], default=
-			"Please describe the issue in as much detail as possible.\n"
-			"Make sure to include:\n"
-			"\n"
-			"* Steps to reproduce\n"
-			"* OS, browser, etc., with version where applicable\n"
-			"\n"
-			"Markdown is supported.")
+							choices=[(i, "%i - %s" % (i, text)) for i, text in enumerate(Issue.urgencies)], default=3)
+	text = TextAreaField(u'Text', validators=[validators.DataRequired()])

@@ -2,12 +2,48 @@
 {% block title %}New Issue - {{ project.name }}{% endblock %}
 {% block content %}
 	<form action="." method="POST" class="form-horizontal clearfix">
-		<header>
-			<h3>
+		<header class="clearfix">
+			<h3 class="pull-left">
 				New Issue
 				<small><a href="{{ url_for('project', slug=project.slug) }}" class="muted">{{ project.name }}</a></small>
 			</h3>
+			<a href="#" data-toggle="collapse" data-target="#good-report-guide" class="pull-right">
+				What does a good report contain?
+			</a>
 		</header>
+		<div id="good-report-guide" class="collapse">
+			<p>
+				A good report should be to the point, and includes as much relevant information as possible.<br />
+				A good report should also have an appropriate title, to make skimming through the list easier.<br />
+				A good report doesn't have to be very long - it can be as short as a single, well-worded sentence.
+			</p>
+			
+			<hr />
+			
+			<p>A good <strong>bug report</strong> contains, at the very least:</p>
+			<ul>
+				<li>How to reproduce the bug</li>
+				<li>What exactly happens/happened</li>
+				<li>
+					Other programs that may be affecting it, like...
+					<ul>
+						<li>...what <abbr title="Windows XP, Windows 7, OS X Lion/10.7, iOS 6, etc.">OS</abbr> you're running</li>
+						<li>...for webapps, your <abbr title="Chrome, Firefox, Safari, Internet Explorer 6, etc.">browser</abbr></li>
+						<li>...for anything mobile, what <abbr title="iPhone 3GS, iPad 2, Samsung Galaxy SII, etc.">device</abbr> you're using</li>
+					</ul>
+				</li>
+			</ul>
+			
+			<hr />
+			
+			<p>A good <strong>feature request</strong> or <strong>suggestion</strong> contains, at the very least:</p>
+			<ul>
+				<li>A clear explanation of the feature!</li>
+				<li>If it's not immediately obvious, an explanation of how it would help.</li>
+			</ul>
+			
+			<hr />
+		</div>
 		
 		{% if login_error %}
 			<p class="text-error">Invalid username or password</p>
@@ -24,7 +60,8 @@
 					<label class="control-label" for="{{ field.id }}">{{ field.label.text}}</label>
 					<div class="controls">
 						{% if field.type == "TextAreaField" %}
-						{{ field(rows=20, class='input-block-level') }}
+						{{ field(placeholder='Describe your issue here', rows=20, class='input-block-level') }}
+						<small><strong>Markdown</strong> is supported</small>
 						{% else %}
 						{{ field(placeholder=field.label.text, class='input-block-level') }}
 						{% endif %}
