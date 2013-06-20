@@ -8,12 +8,16 @@ db = SQLAlchemy()
 
 class User(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(15))
+	name = db.Column(db.String(20))
+	username = db.Column(db.String(15), unique=True)
 	password = db.Column(db.String(120))
+	email = db.Column(db.String(255))
 	
-	def __init__(self, username, password):
+	def __init__(self, name, username, password, email):
+		self.name = name
 		self.username = username
 		self.password = pwd_context.encrypt(password)
+		self.email = email
 	
 	def verify_password(self, password):
 		return pwd_context.verify(password, self.password)

@@ -8,7 +8,7 @@ import markdown2
 
 import relative_time
 from models import User, Project, Issue, get_available_projects
-from forms import LoginForm, IssueForm
+from forms import LoginForm, RegisterForm, IssueForm
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 path = lambda p: os.path.join(ROOT, p)
@@ -82,6 +82,20 @@ def login():
 		else:
 			login_error = True
 	return render_template('login.html', form=form, login_error=login_error)
+
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+	form = RegisterForm()
+	if form.validate_on_submit():
+		if(User.query.filter_by(username=form.username.data).count() > 0):
+			form.username.errors.append("Username is already in use")
+		else:
+			user = User(form.name.data, form.username.data, form.password.data, form.email.data)
+			db.session.add(user)
+			db.session.commit()
+			login_user(user, remember=False)
+			return redirect(url_for('home'))
+	return render_template('register.html', form=form)
 
 @app.route('/logout/')
 def logout():
