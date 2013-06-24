@@ -90,7 +90,7 @@ def register():
 		if(User.query.filter_by(username=form.username.data).count() > 0):
 			form.username.errors.append("Username is already in use")
 		else:
-			user = User(form.name.data, form.username.data, form.password.data, form.email.data)
+			user = User(form.name.data, form.email.data, form.username.data, form.password.data)
 			db.session.add(user)
 			db.session.commit()
 			login_user(user, remember=False)

@@ -6,18 +6,25 @@ from passlib.apps import custom_app_context as pwd_context
 
 db = SQLAlchemy()
 
+project_members = db.Table('project_members',
+	db.Column('project_id', db.Integer, db.ForeignKey('project.id')),
+	db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+)
+
 class User(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(20))
+	email = db.Column(db.String(255))
 	username = db.Column(db.String(15), unique=True)
 	password = db.Column(db.String(120))
-	email = db.Column(db.String(255))
 	
-	def __init__(self, name, username, password, email):
+	is_admin = db.Column(db.Boolean())
+	
+	def __init__(self, name, email, username, password):
 		self.name = name
+		self.email = email
 		self.username = username
 		self.password = pwd_context.encrypt(password)
-		self.email = email
 	
 	def verify_password(self, password):
 		return pwd_context.verify(password, self.password)
@@ -27,7 +34,8 @@ class Project(db.Model):
 	slug = db.Column(db.String(100), unique=True)
 	public = db.Column(db.Boolean)
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	owner = db.relationship('User', backref=db.backref('projects', lazy='dynamic'))
+	owner = db.relationship('User', backref=db.backref('created_projects', lazy='dynamic'))
+	members = db.relationship('User', secondary=project_members, backref=db.backref('projects', lazy='dynamic'))
 	started = db.Column(db.DateTime)
 	name = db.Column(db.String(100), unique=True)
 	description = db.Column(db.Text())

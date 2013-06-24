@@ -3,8 +3,7 @@
 {% block content %}
 	<header class="issue-list-header clearfix">
 		<h3 class="pull-left">
-			{{ project.name }}&nbsp;
-			<small>by <a href="{{ url_for('user', username=project.owner.username) }}">{{ project.owner.username }}</small>
+			{{ project.name }}
 		</h3>
 		<a href="{{ url_for('project_issue_new', slug=project.slug) }}" class="btn pull-right">New Issue</a>
 	</header>
