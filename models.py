@@ -13,32 +13,40 @@ project_members = db.Table('project_members',
 
 class User(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(20))
-	email = db.Column(db.String(255))
 	username = db.Column(db.String(15), unique=True)
 	password = db.Column(db.String(120))
+	name = db.Column(db.String(20))
+	email = db.Column(db.String(255))
 	
 	is_admin = db.Column(db.Boolean())
 	
-	def __init__(self, name, email, username, password):
+	def __init__(self, username = None, password = None, name = None, email = None):
+		self.username = username
+		self.set_password(password)
 		self.name = name
 		self.email = email
-		self.username = username
+	
+	def set_password(self, password):
 		self.password = pwd_context.encrypt(password)
 	
 	def verify_password(self, password):
 		return pwd_context.verify(password, self.password)
+	
+	def __str__(self):
+		return "@%s" % self.username
 
 class Project(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	
+	name = db.Column(db.String(100), unique=True)
 	slug = db.Column(db.String(100), unique=True)
+	description = db.Column(db.Text())
 	public = db.Column(db.Boolean)
+	started = db.Column(db.DateTime)
+	
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	owner = db.relationship('User', backref=db.backref('created_projects', lazy='dynamic'))
 	members = db.relationship('User', secondary=project_members, backref=db.backref('projects', lazy='dynamic'))
-	started = db.Column(db.DateTime)
-	name = db.Column(db.String(100), unique=True)
-	description = db.Column(db.Text())
 	
 	def __init__(self, owner, public, name, description):
 		self.public = public
@@ -53,6 +61,9 @@ class Project(db.Model):
 	
 	def is_allowed(self, user):
 		return self.public or self.owner == user
+	
+	def __str__(self):
+		return self.name
 
 class Issue(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -84,6 +95,9 @@ class Issue(db.Model):
 	
 	def is_allowed(self, user):
 		return self.project.is_allowed(user)
+	
+	def __str__():
+		return "#%s" % self.id
 
 def get_available_projects(user):
 	if user.is_anonymous():
