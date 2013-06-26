@@ -24,3 +24,14 @@ Why another bug tracker?
    * And after seeing a certain company's issue tracker dying on a daily basis due to running out of RAM, I'm not having any Ruby on my server
 3. All of these are aimed towards companies with a dedicated QA division (and where everyone on a project knows each other)
 4. Why not?
+
+Requirements
+------------
+* Python 2.7+
+* Flask
+* Flask-Login
+* Flask-SQLAlchemy
+* Flask-WTF
+* markdown2
+* passlib
+
