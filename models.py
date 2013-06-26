@@ -67,14 +67,16 @@ class Project(db.Model):
 
 class Issue(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	
+	title = db.Column(db.String(140))
+	text = db.Column(db.Text())
+	urgency = db.Column(db.Integer())
+	
 	project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
 	project = db.relationship('Project', backref=db.backref('issues', lazy='dynamic'))
 	spotter_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	spotter = db.relationship('User', backref=db.backref('reports', lazy='dynamic'))
 	spotted = db.Column(db.DateTime)
-	urgency = db.Column(db.Integer())
-	title = db.Column(db.String(140))
-	text = db.Column(db.Text())
 	
 	urgencies = [
 		"Wishlist",
