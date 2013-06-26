@@ -45,9 +45,6 @@
 			<hr />
 		</div>
 		
-		{% if login_error %}
-			<p class="text-error">Invalid username or password</p>
-		{% endif %}
 		{% for field in form %}
 			{% if field.type == 'CSRFTokenField' or field.type == 'HiddenField' %}
 				{{ field }}

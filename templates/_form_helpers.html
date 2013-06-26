@@ -1,0 +1,21 @@
+{% macro render_field(field) %}
+	{% if field.type == 'CSRFTokenField' or field.type == 'HiddenField' %}
+		{{ field }}
+	{% elif field.type == 'BooleanField' %}
+		<label class="checkbox">
+			{{ field }} {{ field.label.text}}
+		</label>
+	{% else %}
+		<div class="control-group{% if field.errors %} error{% endif %}">
+			<label class="control-label" for="{{ field.id }}">{{ field.label.text}}</label>
+			<div class="controls">
+				{% if field.type == "TextAreaField" %}
+				{{ field(placeholder='Describe your issue here', rows=20, class='input-block-level') }}
+				<small><strong>Markdown</strong> is supported</small>
+				{% else %}
+				{{ field(placeholder=field.label.text, class='input-block-level') }}
+				{% endif %}
+			</div>
+		</div>
+	{% endif %}
+{% endmacro %}

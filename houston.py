@@ -3,12 +3,15 @@ from flask import Flask, g, request
 from flask import render_template, url_for, redirect, abort, flash
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_user, logout_user, current_user
+from flask.ext.admin import Admin
+from flask.ext.admin.contrib.sqlamodel import ModelView
 from jinja2 import evalcontextfilter, Markup, escape
 import markdown2
 
 import relative_time
 from models import User, Project, Issue, get_available_projects
 from forms import LoginForm, RegisterForm, IssueForm
+from admin import UserAdminView, ProjectAdminView, IssueAdminView
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 path = lambda p: os.path.join(ROOT, p)
@@ -28,6 +31,12 @@ db.app = app # Workaround for a bug in Flask-SQLAlchemy
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+# -- Admin
+admin = Admin(app, name="Houston")
+admin.add_view(UserAdminView(db.session))
+admin.add_view(ProjectAdminView(db.session))
+admin.add_view(IssueAdminView(db.session))
 
 @login_manager.user_loader
 def load_user(userid):
@@ -90,7 +99,7 @@ def register():
 		if(User.query.filter_by(username=form.username.data).count() > 0):
 			form.username.errors.append("Username is already in use")
 		else:
-			user = User(form.name.data, form.email.data, form.username.data, form.password.data)
+			user = User(form.username.data, form.password.data, form.name.data, form.email.data)
 			db.session.add(user)
 			db.session.commit()
 			login_user(user, remember=False)

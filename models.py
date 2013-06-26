@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
 	
 	is_admin = db.Column(db.Boolean())
 	
-	def __init__(self, username = None, password = None, name = None, email = None):
+	def __init__(self, username='', password='', name='', email=''):
 		self.username = username
 		self.set_password(password)
 		self.name = name
@@ -48,7 +48,7 @@ class Project(db.Model):
 	owner = db.relationship('User', backref=db.backref('created_projects', lazy='dynamic'))
 	members = db.relationship('User', secondary=project_members, backref=db.backref('projects', lazy='dynamic'))
 	
-	def __init__(self, owner, public, name, description):
+	def __init__(self, owner='', public='', name='', description=''):
 		self.public = public
 		self.owner = owner
 		self.started = datetime.now()
